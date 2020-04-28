@@ -10,13 +10,20 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var sharePref : Preferences
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        sharePref = Preferences(baseContext)
+
         // Ketika user menekan button masuk
         btn_masuk_login.setOnClickListener(){
-            Login() // memanggil function Login()
+            val username = et_username_login.text.toString()
+            val password = et_password_login.text.toString()
+            validasiForm(username,password)
         }
 
         // Ketika user menekan tombol daftar
@@ -27,30 +34,50 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun Login(){
-        // Deklarasi variabel
-        val username = et_username_login.text.toString() // mengambil value dari EditText username
-        val password = et_password_login.text.toString() // mengambil value dari EditText password
-        val Preferences = Preferences(baseContext) // Membuat object dari Class Preferences
+    fun Login(user: String,pass: String){
+        // Membuat objek dari UserModel dan mengisi parameter yang ada di class data UserModel
+        val userModel = UserModel(user,pass,"")
 
-        // Pengecekan
-            // Apakah user sudah terdaftar atau belum
-        if(username.equals(Preferences.getRegisteredUser(baseContext)) // mengecek username dari Shared Preferences
-            && password.equals(Preferences.getRegisteredPassword(baseContext))){ //mengecek password dari Shared Preferences
+        // Menyimpan data ke shared preferences
+        sharePref.setUserPreferences(baseContext,userModel) //
+        sharePref.setLoggedInStatus(baseContext,true)
 
-            val userModel = UserModel(username,password,"") // membuat objek dari UserModel dan menambahkan data
+        // Pindah halaman ke home activity
+        startActivity(Intent(baseContext,HomeActivity::class.java))
+        finish()
+    }
 
-            // Menyimpan data ke shared preferences
-            Preferences.setUserPreferences(baseContext,userModel) //
-            Preferences.setLoggedInStatus(baseContext,true)
+    // Fungsi pengecekan username
+    fun cekUser(user: String):Boolean{
+        // Membandingkan value dari edit text dengan data Shared Preferences
+        return user.equals(sharePref.getRegisteredUser(baseContext)) // Ini akan mereturnkan Boolean (true/false)
+    }
 
-            // Pindah halaman ke home activity
-            startActivity(Intent(baseContext,HomeActivity::class.java))
-            finish()
+    // Fungsi pengecekan password
+    fun cekPass(pass: String): Boolean{
+        // Membandingkan value dari edit text dengan data Shared Preferences
+        return pass.equals(sharePref.getRegisteredPassword(baseContext)) // Ini akan mereturnkan Boolean (true/false)
+    }
+
+    // Validasi Form
+    fun validasiForm(user:String,pass: String){
+        if(user.isEmpty()){
+            et_username_login.error = "username tidak boleh kosong"
+            return
         }
-        else{ // kondisi jika user belum terdartar di shared preferences
-            Toast.makeText(this,"Belum Regis",Toast.LENGTH_LONG).show()
+        if(pass.isEmpty()){
+            et_password_login.error = "password tidak boleh kosong"
+            return
         }
-        // END-Pengecekan
+
+        // Memeriksa apakah username dan password sudah ada di data shared preferences
+        // Jika ya maka memanggil fungsi login
+        // Jika tidak maka menampilkan Toast Message
+        if(cekUser(user) == true && cekPass(pass)){
+            Login(user,pass) //memanggil function Login()
+        }
+        else{
+            Toast.makeText(baseContext,"Mohon Register Terlebih Dahulu",Toast.LENGTH_LONG).show()
+        }
     }
 }
