@@ -72,13 +72,14 @@
         </LinearLayout>
     </LinearLayout>
     <Button
+        android:id="@+id/btn_logout_home"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:background="@drawable/btn_rounded"
         android:text="Logout"
         android:textAllCaps="false"
         android:textColor="#f3f3f3"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="64dp"
         android:layout_marginStart="64dp"
         app:layout_constraintBottom_toBottomOf="parent"

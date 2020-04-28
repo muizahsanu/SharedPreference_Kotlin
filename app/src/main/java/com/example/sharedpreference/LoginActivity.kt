@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
         tv_daftar_login.setOnClickListener(){
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
