@@ -8,6 +8,12 @@ import com.example.sharedpreference.Model.UserModel
 import com.example.sharedpreference.SharedPreferences.Preferences
 import kotlinx.android.synthetic.main.activity_login.*
 
+/*28 April 2020
+Nama: Muiz Ahsanu Haqi
+Nim: 10117199
+Kelas: IF-5
+*/
+
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var sharePref : Preferences
