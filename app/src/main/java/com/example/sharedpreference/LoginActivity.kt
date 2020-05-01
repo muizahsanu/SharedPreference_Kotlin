@@ -73,11 +73,11 @@ class LoginActivity : AppCompatActivity() {
         // Memeriksa apakah username dan password sudah ada di data shared preferences
         // Jika ya maka memanggil fungsi login
         // Jika tidak maka menampilkan Toast Message
-        if(cekUser(user) == true && cekPass(pass)){
+        if(cekUser(user) == true && cekPass(pass) == true){
             Login(user,pass) //memanggil function Login()
         }
         else{
-            Toast.makeText(baseContext,"Mohon Register Terlebih Dahulu",Toast.LENGTH_LONG).show()
+            Toast.makeText(baseContext,"Belum Terdaftar Di Preferences",Toast.LENGTH_LONG).show()
         }
     }
 }

@@ -88,11 +88,11 @@
                 android:layout_marginTop="16dp">
             </EditText>
             <EditText
-                android:id="@+id/et_phone_register"
+                android:id="@+id/et_repassword_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
-                android:inputType="phone"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
                 android:textColorHint="#f3f3f3"
                 android:textColor="#f3f3f3"
                 android:backgroundTint="#f3f3f3"
